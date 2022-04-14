@@ -10,8 +10,7 @@ import sk.stuba.fei.uim.oop.controls.UniversalAdapter;
 public class Game extends UniversalAdapter {
     private JRadioButton size6, size8, size10, size12;
     private final JLabel sizeLabel = new JLabel("Size: 6x6");
-//    private JLabel winnerLabel = new JLabel("Winner: ");
-    private final JLabel playerColorLabel = new JLabel("Player: ");
+    private final JLabel playerLabel = new JLabel("Player: White");
     private JButton restartButton;
     private int size = 6;
     public Game() {
@@ -38,7 +37,6 @@ public class Game extends UniversalAdapter {
         this.setLayout(new BorderLayout());
         GameLogic logic = new GameLogic(this, this.size);
         this.addKeyListener(logic);
-//        frame.add(logic.getRender());
 
         JPanel sideMenu = new JPanel();
         sideMenu.setBackground(Color.LIGHT_GRAY);
@@ -47,11 +45,9 @@ public class Game extends UniversalAdapter {
         restartButton.setFocusable(false);
 
         sideMenu.setLayout(new GridLayout(1, 3));
-//        sideMenu.add(logic.getLabel());
         sideMenu.add(restartButton);
         sideMenu.add(sizeLabel);
-        sideMenu.add(playerColorLabel);
-//        sideMenu.add(winnerLabel);
+        sideMenu.add(playerLabel);
         this.add(sideMenu, BorderLayout.NORTH);
 
         JPanel sizeSelection = new JPanel();
@@ -79,6 +75,15 @@ public class Game extends UniversalAdapter {
         this.setVisible(true);
     }
 
+    public void setWinner(int winner) {
+        if (winner == 1) {
+            this.playerLabel.setText("Winner: Player");
+        }
+        else if (winner == 2){
+            this.playerLabel.setText("Winner: PC");
+        }
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
@@ -87,7 +92,7 @@ public class Game extends UniversalAdapter {
         }
         if (e.getKeyChar() == KeyEvent.VK_R) {
             this.dispose();
-            new Game();
+            new Game(12);
         }
     }
 
@@ -95,7 +100,7 @@ public class Game extends UniversalAdapter {
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == restartButton) {
             this.dispose();
-            new Game();
+            new Game(12);
         }
         if(this.size6.isSelected()){
             this.dispose();
