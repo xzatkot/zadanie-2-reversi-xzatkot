@@ -1,7 +1,6 @@
 package sk.stuba.fei.uim.oop.controls;
 
 import java.awt.event.*;
-import sk.stuba.fei.uim.oop.controls.GameLogic;
 
 import javax.swing.*;
 
