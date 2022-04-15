@@ -11,10 +11,15 @@ public class Game extends UniversalAdapter {
     private JRadioButton size6, size8, size10, size12;
     private final JLabel sizeLabel = new JLabel("Size: 6x6");
     private final JLabel playerLabel = new JLabel("Player: White");
+    private int playerLives = 2;
+    private int computerLives = 2;
+    private final JLabel playerStones = new JLabel("Player: " + playerLives);
+    private final JLabel computerStones = new JLabel("PC: " + computerLives);
     private JButton restartButton;
     private int size = 6;
+    private GameLogic logic;
     public Game() {
-        this.setTitle("Reverzi game");
+        this.setTitle("Reversi game");
         this.initializeGame();
     }
 
@@ -25,9 +30,9 @@ public class Game extends UniversalAdapter {
     }
 
     private void initializeGame() {
-        this.setTitle("Reverzi game");
+        this.setTitle("Reversi game");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(this.size*68+21, this.size*68+96);
+        this.setSize(this.size*68+31, this.size*68+106);
         this.setResizable(true);
         this.setFocusable(true);
         this.addKeyListener(this);
@@ -35,8 +40,8 @@ public class Game extends UniversalAdapter {
         this.sizeLabel.setText("Size: "+this.size+"x"+this.size);
 
         this.setLayout(new BorderLayout());
-        GameLogic logic = new GameLogic(this, this.size);
-        this.addKeyListener(logic);
+        this.logic = new GameLogic(this, this.size);
+        this.addKeyListener(this.logic);
 
         JPanel sideMenu = new JPanel();
         sideMenu.setBackground(Color.LIGHT_GRAY);
@@ -44,10 +49,12 @@ public class Game extends UniversalAdapter {
         restartButton.addActionListener(this);
         restartButton.setFocusable(false);
 
-        sideMenu.setLayout(new GridLayout(1, 3));
+        sideMenu.setLayout(new GridLayout(1, 6));
         sideMenu.add(restartButton);
         sideMenu.add(sizeLabel);
         sideMenu.add(playerLabel);
+        sideMenu.add(playerStones);
+        sideMenu.add(computerStones);
         this.add(sideMenu, BorderLayout.NORTH);
 
         JPanel sizeSelection = new JPanel();
@@ -75,11 +82,18 @@ public class Game extends UniversalAdapter {
         this.setVisible(true);
     }
 
-    public void setWinner(int winner) {
-        if (winner == 1) {
+    public void stealRocks(int num, int player) {
+        this.playerLives = logic.getLives()[0];
+        this.computerLives = logic.getLives()[1];
+        this.playerStones.setText("Player: " + this.playerLives);
+        this.computerStones.setText("PC: " + this.computerLives);
+    }
+
+    public void setWinner() {
+        if (this.playerLives > this.computerLives) {
             this.playerLabel.setText("Winner: Player");
         }
-        else if (winner == 2){
+        else if (this.playerLives < this.computerLives){
             this.playerLabel.setText("Winner: PC");
         }
     }
@@ -92,7 +106,7 @@ public class Game extends UniversalAdapter {
         }
         if (e.getKeyChar() == KeyEvent.VK_R) {
             this.dispose();
-            new Game(12);
+            new Game();
         }
     }
 
@@ -100,7 +114,7 @@ public class Game extends UniversalAdapter {
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == restartButton) {
             this.dispose();
-            new Game(12);
+            new Game();
         }
         if(this.size6.isSelected()){
             this.dispose();
