@@ -392,7 +392,8 @@ public class GameLogic extends UniversalAdapter{
             }
         }
         int stolenRocks = stealRocks(best[0], best[1], 'b', 'w');
-        this.game.stealRocks(stolenRocks, this.playerMove);
+        System.out.println("PC stole " + stolenRocks + " rocks from player.");
+        this.game.stealRocks();
     }
 
     private void cleanUp() {
@@ -452,7 +453,8 @@ public class GameLogic extends UniversalAdapter{
         if (targetLabel.getIcon().equals(focused)) {
             targetLabel.setIcon(white);
             int stolenRocks = stealRocks(row, col, 'w', 'b');
-            this.game.stealRocks(stolenRocks+1, playerMove);
+            System.out.println("Player stole " + stolenRocks + " rocks from the PC.");
+            this.game.stealRocks();
             this.playerMove = (this.playerMove+1)%2;
             computerMove();
             markViableSpots();

@@ -82,7 +82,7 @@ public class Game extends UniversalAdapter {
         this.setVisible(true);
     }
 
-    public void stealRocks(int num, int player) {
+    public void stealRocks() {
         this.playerLives = logic.getLives()[0];
         this.computerLives = logic.getLives()[1];
         this.playerStones.setText("Player: " + this.playerLives);
