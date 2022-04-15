@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import sk.stuba.fei.uim.oop.controls.check.checkBoard;
-import sk.stuba.fei.uim.oop.playground.Game;
+import sk.stuba.fei.uim.oop.game.Game;
 import sk.stuba.fei.uim.oop.controls.steal.*;
 
 public class GameLogic extends UniversalAdapter{

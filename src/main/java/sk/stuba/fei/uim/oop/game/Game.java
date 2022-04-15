@@ -1,4 +1,4 @@
-package sk.stuba.fei.uim.oop.playground;
+package sk.stuba.fei.uim.oop.game;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
