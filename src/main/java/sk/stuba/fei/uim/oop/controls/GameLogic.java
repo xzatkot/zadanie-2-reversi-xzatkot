@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import sk.stuba.fei.uim.oop.controls.check.checkBoard;
 import sk.stuba.fei.uim.oop.playground.Game;
 import sk.stuba.fei.uim.oop.controls.steal.*;
 
@@ -13,7 +14,7 @@ public class GameLogic extends UniversalAdapter{
     private final ImageIcon empty = new ImageIcon(this.path+"/empty_spot.png", "empty");
     private final ImageIcon white = new ImageIcon(this.path+"/white_spot.png", "white");
     private final ImageIcon black = new ImageIcon(this.path+"/black_spot.png", "black");
-    private final ImageIcon viable = new ImageIcon(this.path+"/viable_spot.png", "viable");
+    public final ImageIcon viable = new ImageIcon(this.path+"/viable_spot.png", "viable");
     private final ImageIcon focused = new ImageIcon(this.path+"/focused_spot.png", "focused");
 
     public JPanel board;
@@ -25,6 +26,7 @@ public class GameLogic extends UniversalAdapter{
     private boolean isPlayable = true;
     private final stealPC stealPC = new stealPC();
     private final stealPlayer stealPlayer = new stealPlayer(this);
+    private final checkBoard check = new checkBoard(this);
 
     public GameLogic(Game game, int size) {
         this.size = size;
@@ -110,203 +112,7 @@ public class GameLogic extends UniversalAdapter{
                 this.stealPlayer.stealLeftUp(row, col, symbol, opponent, icon);
     }
 
-    private boolean checkDown(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        for (int i=row+1;i<this.size;i++) {
-            if (this.playground[i][col] == opponent) {
-                stolenRocks = true;
-            }
-            else if (this.playground[i][col] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            }
-            else if (this.playground[i][col] == ' ' || this.playground[i][col] == 'v') {
-                stolenRocks = false;
-                row++;
-            }
-        }
-        return false;
-    }
 
-    private boolean checkUp(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        for (int i=row-1;i>=0;i--) {
-            if (this.playground[i][col] == opponent) {
-                stolenRocks = true;
-            } else if (this.playground[i][col] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            } else if (this.playground[i][col] == ' ' || this.playground[i][col] == 'v') {
-                stolenRocks = false;
-                row--;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkRight(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        for (int i=col+1;i<this.size;i++) {
-            if (this.playground[row][i] == opponent) {
-                stolenRocks = true;
-            } else if (this.playground[row][i] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            } else if (this.playground[row][i] == ' '  || this.playground[row][i] == 'v') {
-                stolenRocks = false;
-                col++;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkLeft(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        for (int i=col-1;i>=0;i--) {
-            if (this.playground[row][i] == opponent) {
-                stolenRocks = true;
-            } else if (this.playground[row][i] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            } else if (this.playground[row][i] == ' ' || this.playground[row][i] == 'v') {
-                stolenRocks = false;
-                col--;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkRightDown(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        int x = row+1;
-        int y = col+1;
-        while (x<this.size && y<this.size && x>=0 && y>=0) {
-            if (this.playground[x][y] == opponent) {
-                stolenRocks = true;
-            }
-            else if (this.playground[x][y] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            }
-            else if (this.playground[x][y] == ' ' || this.playground[x][y] == 'v') {
-                stolenRocks = false;
-                row++;
-                col++;
-            }
-            x++;
-            y++;
-        }
-        return false;
-    }
-
-    private boolean checkLeftDown(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        int x = row+1;
-        int y = col-1;
-        while (x>=0 && y>=0 && x<this.size && y<this.size) {
-            if (this.playground[x][y] == opponent) {
-                stolenRocks = true;
-            }
-            else if (this.playground[x][y] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            }
-            else if (this.playground[x][y] == ' ' || this.playground[x][y] == 'v') {
-                stolenRocks = false;
-                row++;
-                col--;
-            }
-            x++;
-            y--;
-        }
-        return false;
-    }
-
-    private boolean checkRightUp(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        int x = row-1;
-        int y = col+1;
-        while (x>=0 && y>=0 && x<this.size && y<this.size) {
-            if (this.playground[x][y] == opponent) {
-                stolenRocks = true;
-            }
-            else if (this.playground[x][y] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            }
-            else if (this.playground[x][y] == ' ' || this.playground[x][y] == 'v') {
-                stolenRocks = false;
-                row--;
-                col++;
-            }
-            x--;
-            y++;
-        }
-        return false;
-    }
-
-    private boolean checkLeftUp(int row, int col, char symbol, char opponent) {
-        boolean stolenRocks = false;
-        int x = row-1;
-        int y = col-1;
-        while (x>=0 && y>=0 && x<this.size && y<this.size) {
-            if (this.playground[x][y] == opponent) {
-                stolenRocks = true;
-            }
-            else if (this.playground[x][y] == symbol && stolenRocks) {
-                if (this.playground[row][col] == ' ') {
-                    this.playground[row][col] = 'v';
-                    int place = col+row*this.size;
-                    JLabel currentLabel = (JLabel) this.board.getComponent(place);
-                    currentLabel.setIcon(viable);
-                    return true;
-                }
-            }
-            else if (this.playground[x][y] == ' ' || this.playground[x][y] == 'v') {
-                stolenRocks = false;
-                row--;
-                col--;
-            }
-            x--;
-            y--;
-        }
-        return false;
-    }
 
     private void markViableSpots() {
         char opponent;
@@ -321,10 +127,10 @@ public class GameLogic extends UniversalAdapter{
         }
         for (int i=0;i<this.size;i++) {
             for (int j=0;j<this.size;j++) {
-                this.isPlayable = checkDown(i, j, symbol, opponent) || checkUp(i, j, symbol, opponent) ||
-                        checkRight(i, j, symbol, opponent) || checkLeft(i, j, symbol, opponent) ||
-                        checkLeftUp(i, j, symbol, opponent) || checkLeftDown(i, j, symbol, opponent) ||
-                        checkRightUp(i, j, symbol, opponent) || checkRightDown(i, j, symbol, opponent);
+                this.isPlayable = check.checkDown(i, j, symbol, opponent) || check.checkUp(i, j, symbol, opponent) ||
+                        check.checkRight(i, j, symbol, opponent) || check.checkLeft(i, j, symbol, opponent) ||
+                        check.checkLeftUp(i, j, symbol, opponent) || check.checkLeftDown(i, j, symbol, opponent) ||
+                        check.checkRightUp(i, j, symbol, opponent) || check.checkRightDown(i, j, symbol, opponent);
             }
         }
     }
