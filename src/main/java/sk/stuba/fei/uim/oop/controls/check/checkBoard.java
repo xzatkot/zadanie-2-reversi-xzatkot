@@ -1,8 +1,7 @@
 package sk.stuba.fei.uim.oop.controls.check;
 
-import sk.stuba.fei.uim.oop.controls.GameLogic;
-
 import javax.swing.*;
+import sk.stuba.fei.uim.oop.controls.GameLogic;
 
 public class checkBoard {
     private final GameLogic logic;

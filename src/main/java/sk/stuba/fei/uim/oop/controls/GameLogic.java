@@ -1,12 +1,11 @@
 package sk.stuba.fei.uim.oop.controls;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
-
-import sk.stuba.fei.uim.oop.controls.check.checkBoard;
 import sk.stuba.fei.uim.oop.game.Game;
 import sk.stuba.fei.uim.oop.controls.steal.*;
+import sk.stuba.fei.uim.oop.controls.check.checkBoard;
 
 public class GameLogic extends UniversalAdapter{
 

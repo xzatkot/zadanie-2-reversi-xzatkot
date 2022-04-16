@@ -1,9 +1,9 @@
 package sk.stuba.fei.uim.oop.game;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
 import sk.stuba.fei.uim.oop.controls.GameLogic;
 import sk.stuba.fei.uim.oop.controls.UniversalAdapter;
 
@@ -17,7 +17,7 @@ public class Game extends UniversalAdapter {
     private final JLabel computerStones = new JLabel("PC: " + computerLives);
     private JButton restartButton;
     private int size = 6;
-    private GameLogic logic;
+    protected GameLogic logic;
     public Game() {
         this.setTitle("Reversi game");
         this.initializeGame();

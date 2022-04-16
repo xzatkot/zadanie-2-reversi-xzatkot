@@ -1,8 +1,7 @@
 package sk.stuba.fei.uim.oop.controls.steal;
 
-import sk.stuba.fei.uim.oop.controls.GameLogic;
-
 import javax.swing.*;
+import sk.stuba.fei.uim.oop.controls.GameLogic;
 
 public class stealPlayer {
     private final GameLogic logic;
