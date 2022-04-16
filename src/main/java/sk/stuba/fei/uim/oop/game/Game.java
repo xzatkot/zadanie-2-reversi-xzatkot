@@ -96,6 +96,9 @@ public class Game extends UniversalAdapter {
         else if (this.playerLives < this.computerLives){
             this.playerLabel.setText("Winner: PC");
         }
+        else {
+            this.playerLabel.setText("TIE");
+        }
     }
 
     @Override
@@ -104,7 +107,7 @@ public class Game extends UniversalAdapter {
             this.dispose();
             System.exit(0);
         }
-        if (e.getKeyChar() == KeyEvent.VK_R) {
+        if (e.getKeyChar() == 'r') {
             this.dispose();
             new Game();
         }
