@@ -60,9 +60,7 @@ public class GameLogic extends UniversalAdapter{
 
         board.setLayout(new GridLayout(this.size, this.size));
 
-        while (this.isPlayable) {
-            markViableSpots();
-        }
+        markViableSpots();
     }
 
     private int convertX (int x) {
@@ -110,8 +108,6 @@ public class GameLogic extends UniversalAdapter{
                 this.stealPlayer.stealLeftDown(row, col, symbol, opponent, icon) +
                 this.stealPlayer.stealLeftUp(row, col, symbol, opponent, icon);
     }
-
-
 
     private void markViableSpots() {
         char opponent;
@@ -218,8 +214,13 @@ public class GameLogic extends UniversalAdapter{
     private void computerMove() {
         cleanUp();
         markViableSpots();
+        if (!this.isPlayable) {
+            System.out.println("No possible moves.");
+        }
         if (checkPossibleMove() == 0) {
             game.setWinner();
+            this.isPlayable = false;
+            return;
         }
         findBestMove();
         cleanUp();
@@ -244,7 +245,7 @@ public class GameLogic extends UniversalAdapter{
             this.game.dispose();
             System.exit(0);
         }
-        if (e.getKeyChar() == KeyEvent.VK_R) {
+        if (e.getKeyChar() == 'r') {
             this.game.dispose();
             new Game();
         }
@@ -258,6 +259,9 @@ public class GameLogic extends UniversalAdapter{
         if (targetLabel.getIcon().equals(focused)) {
             targetLabel.setIcon(white);
             int stolenRocks = stealRocks(row, col, 'w', 'b');
+            if (!this.isPlayable) {
+                System.out.println("No possible moves.");
+            }
             System.out.println("Player stole " + stolenRocks + " rocks from the PC.");
             this.game.stealRocks();
             this.playerMove = (this.playerMove+1)%2;
@@ -265,6 +269,7 @@ public class GameLogic extends UniversalAdapter{
             markViableSpots();
             if (checkPossibleMove() == 0) {
                 game.setWinner();
+                this.isPlayable = false;
             }
         }
     }

@@ -60,9 +60,9 @@ public class Game extends UniversalAdapter {
         JPanel sizeSelection = new JPanel();
         sizeSelection.setLayout(new GridLayout(1, 5));
         this.size6 = new JRadioButton("6x6");
-        size8 = new JRadioButton("8x8");
-        size10 = new JRadioButton("10x10");
-        size12 = new JRadioButton("12x12");
+        this.size8 = new JRadioButton("8x8");
+        this.size10 = new JRadioButton("10x10");
+        this.size12 = new JRadioButton("12x12");
         JButton sizeConfirm = new JButton("Change size");
         sizeConfirm.addActionListener(this);
         sizeConfirm.setFocusable(false);
@@ -92,12 +92,15 @@ public class Game extends UniversalAdapter {
     public void setWinner() {
         if (this.playerLives > this.computerLives) {
             this.playerLabel.setText("Winner: Player");
+            System.out.println("Player won!");
         }
         else if (this.playerLives < this.computerLives){
             this.playerLabel.setText("Winner: PC");
+            System.out.println("PC won!");
         }
         else {
             this.playerLabel.setText("TIE");
+            System.out.println("The game ended in a tie.");
         }
     }
 
